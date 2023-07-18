@@ -23,7 +23,7 @@ public class Task {
 
     private Date updatedAt;
 
-    private boolean isFinished;
+    private Boolean isFinished;
 
 
 

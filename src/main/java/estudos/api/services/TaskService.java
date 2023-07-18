@@ -1,6 +1,7 @@
 package estudos.api.services;
 
 import estudos.api.model.Task;
+import estudos.api.model.dto.TaskInput;
 import estudos.api.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,14 @@ public class TaskService {
     private TaskRepository repository;
 
 
-    public Task createTask(Task task){
-        task.setCreatedAt(new Date());
-        task.setUpdatedAt(new Date());
-        task.setFinished(false);
-        return this.repository.save(task);
+    public Task createTask(TaskInput task){
+        var taskModel = new Task();
+
+        taskModel.setName(task.getName());
+        taskModel.setCreatedAt(task.getCreatedAt());
+        taskModel.setUpdatedAt(task.getUpdatedAt());
+
+        return this.repository.save(taskModel);
     }
 
 
@@ -37,7 +41,7 @@ public class TaskService {
     }
 
 
-    public Task updateTask(Integer taskId, Task newTask){
+    public Task updateTask(Integer taskId, TaskInput newTask){
 
         var oldTask = this.repository.findById(taskId);
 
@@ -51,7 +55,7 @@ public class TaskService {
 
         taskValue.setName(newTask.getName());
 
-        taskValue.setFinished(false);
+        taskValue.setIsFinished(newTask.getIsFinished());
 
         return this.repository.save(taskValue);
     }
@@ -61,7 +65,7 @@ public class TaskService {
         if(!task.isEmpty()){
             var taskValue = task.get();
 
-            taskValue.setFinished(true);
+            taskValue.setIsFinished(true);
             this.repository.save(taskValue);
         }
     }

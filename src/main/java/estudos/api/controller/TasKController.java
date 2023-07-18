@@ -1,6 +1,7 @@
 package estudos.api.controller;
 
 import estudos.api.model.Task;
+import estudos.api.model.dto.TaskInput;
 import estudos.api.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,9 @@ public class TasKController {
     }
 
     @PostMapping()
-    public ResponseEntity<Task> createTask(@RequestBody Task task){
+    public ResponseEntity<Task> createTask(@RequestBody TaskInput task){
         return ResponseEntity.status(HttpStatus.CREATED).body(this.service.createTask(task));
     }
+
+
 }
